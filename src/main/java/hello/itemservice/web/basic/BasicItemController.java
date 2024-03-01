@@ -1,4 +1,4 @@
-package hello.itemservice.web;
+package hello.itemservice.web.basic;
 
 import hello.itemservice.domain.Item;
 import hello.itemservice.domain.ItemRepository;
@@ -33,7 +33,10 @@ public class BasicItemController {
         return "basic/item";
     }
 
-
+    @GetMapping("/add")
+    public String addForm() {
+        return "basic/addForm";
+    }
 
 
     //
