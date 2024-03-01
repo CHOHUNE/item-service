@@ -6,9 +6,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +36,40 @@ public class BasicItemController {
         return "basic/addForm";
     }
 
+//    @PostMapping("/add")
+    public String addItemV1(@RequestParam String itemName,
+                       @RequestParam int price,
+                       @RequestParam Integer quantity,
+                       Model model) {
+
+        Item item = new Item();
+        item.setItemName(itemName);
+        item.setQuantity(quantity);
+        item.setPrice(price);
+
+        itemRepository.save(item);
+
+        model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+//    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute Item item) {
+        itemRepository.save(item);
+//        model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+
+    @PostMapping("/add")
+    public String addItemV3(Item item) {
+        itemRepository.save(item);
+        return "basic/item";
+    }
+
+//    변천과정 -> @RequestParam+model 생략 -> @ModelAttribute 사용 -> @ModelAttribute 마저 생략
 
     //
     @PostConstruct
