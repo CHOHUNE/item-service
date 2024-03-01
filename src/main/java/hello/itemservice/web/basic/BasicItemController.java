@@ -72,6 +72,22 @@ public class BasicItemController {
 //    변천과정 -> @RequestParam+model 생략 -> @ModelAttribute 사용 -> @ModelAttribute 마저 생략
 
     //
+
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model) {
+
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "basic/editForm";
+
+    }
+
+    @PostMapping("/{itemId}/edit")
+    public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
+        itemRepository.update(itemId,item);
+        return "redirect:/basic/items/{itemId}";
+    }
+
     @PostConstruct
     public void init() {
         itemRepository.save(new Item("itemA", 10000, 10));
