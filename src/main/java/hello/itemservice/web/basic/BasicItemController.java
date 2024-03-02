@@ -49,7 +49,9 @@ public class BasicItemController {
 
         itemRepository.save(item);
 
+
         model.addAttribute("item", item);
+        model.addAttribute("item2", item);
 
         return "basic/item";
     }
