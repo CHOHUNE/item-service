@@ -65,15 +65,24 @@ public class BasicItemController {
     }
 
 
-    @PostMapping("/add")
-    public String addItemV3(Item item) {
-        itemRepository.save(item);
-        return "basic/item";
-    }
+//    @PostMapping("/add")
+//    public String addItemV4(Item item) {
+//        itemRepository.save(item);
+//        return "basic/item";
+//    }
 
 //    변천과정 -> @RequestParam+model 생략 -> @ModelAttribute 사용 -> @ModelAttribute 마저 생략
 
-    //
+    @PostMapping("/add")
+    public String addItemV5(Item item) {
+        itemRepository.save(item);
+//        return "basic/item";
+        return "redirect:/basic/items/" + item.getId();
+    }
+
+//    PRG 패턴을 이용하여 마지막 요청이 GET이 되게 해 새로고침 해도 POST 요청이 중복되지 않게 방지
+//    POST REDIRECT GET
+
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
