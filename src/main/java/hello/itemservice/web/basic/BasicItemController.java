@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -73,16 +74,26 @@ public class BasicItemController {
 
 //    변천과정 -> @RequestParam+model 생략 -> @ModelAttribute 사용 -> @ModelAttribute 마저 생략
 
-    @PostMapping("/add")
-    public String addItemV5(Item item) {
-        itemRepository.save(item);
-//        return "basic/item";
-        return "redirect:/basic/items/" + item.getId();
-    }
+//    @PostMapping("/add")
+//    public String addItemV5(Item item) {
+//        itemRepository.save(item);
+////        return "basic/item";
+//        return "redirect:/basic/items/" + item.getId();
+//    }
 
 //    PRG 패턴을 이용하여 마지막 요청이 GET이 되게 해 새로고침 해도 POST 요청이 중복되지 않게 방지
 //    POST REDIRECT GET
 
+    @PostMapping("/add")
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/basic/items/{itemId}";
+    }
+
+//    URL 인코딩을 위해 직접 아이디를 넣는 게 아닌 리다이렉트 어트리뷰트에 담아서 return 한다
+//    status는 쿼리 파라미터 값으로 넘어가서 ? 다음에 true 로 쓰여진다.
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
