@@ -93,7 +93,9 @@ public class BasicItemController {
     }
 
 //    URL 인코딩을 위해 직접 아이디를 넣는 게 아닌 리다이렉트 어트리뷰트에 담아서 return 한다
+//    return 문제 해당 어트리뷰트가 있으면 치환하고, 없으면 쿼리파라미터로 붙는다
 //    status는 쿼리 파라미터 값으로 넘어가서 ? 다음에 true 로 쓰여진다.
+//    리다이렉트 애트리뷰트를 이용하면 패스배리어블도 자동으로 적용된다. - 가변적인 수를 쉽게 치환
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {

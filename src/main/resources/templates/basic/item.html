@@ -14,6 +14,8 @@
   <div class="py-5 text-center"> <h2>상품 상세</h2>
   </div>
   <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+
+<!--  타임리프에서 지원하는 메서드 용법 - 모델에 직접 담지 않고 바로 param을 쓰면 해당 파라메터를 꺼낼 수 있다. -->
   <div>
     <label for="itemId">상품 ID</label>
     <input type="text" id="itemId" name="itemId" class="form-control"
